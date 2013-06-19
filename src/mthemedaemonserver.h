@@ -21,7 +21,7 @@
 #include <QSocketNotifier>
 
 
-#include <mthemedaemon.h>
+#include "mthemedaemon.h"
 
 class QLocalSocket;
 class MThemeDaemonClient;
