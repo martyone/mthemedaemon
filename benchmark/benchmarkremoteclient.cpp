@@ -153,7 +153,7 @@ void BenchmarkRemoteClient::requestPixmap(M::MThemeDaemonProtocol::PixmapIdentif
     qDebug() << "INFO: requesting pixmap" << pixmapIdentifier.imageId << pixmapIdentifier.size;
 #endif
     Packet packet(Packet::RequestPixmapPacket, packetsSent++);
-    packet.setData(new PixmapIdentifier(pixmapIdentifier));
+    packet.setData(new RequestedPixmap(pixmapIdentifier, 0));
     stream << packet;
 
     RequestInfo requestInfo;
