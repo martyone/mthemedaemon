@@ -125,7 +125,6 @@ void TestClient::disconnected()
 void TestClient::pixmapChangedSlot(const QString &imageId, const QSize &size, const MPixmapHandle &pixmapHandle)
 {
     emit pixmapReady(currentTheme, this, pixmapHandle, imageId, size);
-    waitVerify.acquire();
 }
 
 void TestClient::themeChangedSlot(const QStringList &themeInheritance, const QStringList& libraryNames)
@@ -147,8 +146,6 @@ void TestClient::pixmapVerified(const QString& imageId, const QSize& size)
     } else {
         qWarning() << "ERROR:" << imageId << "- pixmap reply to unknown request";
     }
-
-    waitVerify.release();
 }
 
 void TestClient::sendPacket()

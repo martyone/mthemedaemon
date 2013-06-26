@@ -266,7 +266,8 @@ void ClientManager::pixmapReady(const QString& theme, TestClient* client, const 
         qDebug() << "INFO:" << client->getId() << "- pixmap comparison OK (" << imageId << ')';
 #endif
     }
-    client->pixmapVerified(imageId, size);
+    QMetaObject::invokeMethod(client, "pixmapVerified", Qt::QueuedConnection,
+        Q_ARG(QString, imageId), Q_ARG(QSize, size));
 }
 
 bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size)

@@ -18,7 +18,6 @@
 #include <QSize>
 #include <QDir>
 #include <QLocalSocket>
-#include <QSemaphore>
 
 #include "mthemedaemonclient.h"
 
@@ -63,6 +62,8 @@ public:
     const QString& getId() const;
 
     QString getImageDirectory() const;
+
+public slots:
     void pixmapVerified(const QString& imageId, const QSize& size);
 
 signals:
@@ -95,7 +96,6 @@ private:
     QString identifier;
     int operationCount;
     QString currentTheme;
-    QSemaphore waitVerify;
 };
 
 #endif
