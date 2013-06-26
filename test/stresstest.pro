@@ -11,3 +11,7 @@ DEFINES += QT_USE_FAST_CONCATENATION QT_USE_FAST_OPERATOR_PLUS
 
 SUBDIRS = mthemedaemontest.pro \
   testdaemon
+
+tests_xml.files = tests.xml
+tests_xml.path = /opt/tests/mthemedaemon
+INSTALLS += tests_xml

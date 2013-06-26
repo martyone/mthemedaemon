@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+
+    <suite name="mthemedaemon">
+
+        <set name="mthemedaemon">
+
+            <description>mthemedaemon tests</description>
+
+            <case name="mthemedaemontest">
+                <description>Tests mthemedaemon</description>
+                <step>/opt/tests/mthemedaemon/mthemedaemontest 10</step>
+            </case>
+
+        </set>
+
+    </suite>
+
+</testdefinition>
