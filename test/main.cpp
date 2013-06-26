@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QDir>
+#include <QTimer>
 #include <MGConfItem>
 #include "mthemedaemon.h"
 #include "keypresswaiter.h"
@@ -46,6 +47,22 @@ int main(int argc, char **argv)
         KeyPressWaiter keyWaiter;
         QObject::connect(&keyWaiter, SIGNAL(finished()), &manager, SLOT(stop()));
         keyWaiter.start();
+
+        // close on timeout
+        if (app.arguments().count() == 2) {
+            bool ok;
+            int delay;
+            if (delay = app.arguments().at(1).toInt(&ok), !ok || delay <= 0) {
+                qWarning() << "Usage: $0 [seconds]";
+                return 1;
+            }
+
+            QTextStream(stdout) << "Will run for " << delay << " seconds..." << endl;
+
+            // terminate keyWaiter instead of directly invoking manager->stop() to prevent QThread
+            // issuing a warning about being destroyed while running.
+            QTimer::singleShot(delay * 1000, &keyWaiter, SLOT(terminate()));
+        }
 
         // event loop
         result = app.exec();
