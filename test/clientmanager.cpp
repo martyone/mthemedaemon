@@ -232,7 +232,6 @@ void ClientManager::checkConsistency()
 
 void ClientManager::changeThemeAndLocale()
 {
-#ifdef HAVE_GCONF
     // get list of themes
     QDir themeDirectory(THEME_ROOT_DIRECTORY);
     QStringList list = themeDirectory.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
@@ -254,7 +253,6 @@ void ClientManager::changeThemeAndLocale()
 
     // change theme and locale again after a short period of time
     QTimer::singleShot(2000, this, SLOT(changeThemeAndLocale()));
-#endif
 }
 
 void ClientManager::pixmapReady(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size)
@@ -283,7 +281,6 @@ bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const
     // either icon-<xx> or just <xx>
     if(imageId.startsWith("icon"))
     {
-#ifdef HAVE_GCONF
 //        MGConfItem localeName("/meegotouch/i18n/language");
 //        QString locale = localeName.value().toString();
         QDir iconDirectory;
@@ -312,9 +309,6 @@ bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const
         // render pixmap
         QPainter painter(&clientPixmap);
         renderer.render(&painter);
-#else
-        return true;
-#endif
     }
     else
     {

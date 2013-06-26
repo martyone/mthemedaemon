@@ -18,10 +18,7 @@
 #include "mthemedaemonclient.h"
 #include <QHash>
 #include <QBuffer>
-
-#ifdef HAVE_GCONF
 #include "mgconfitem.h"
-#endif
 
 class MLocalThemeDaemon : public IMThemeDaemon
 {
@@ -52,9 +49,7 @@ private slots:
 private:
     MThemeDaemonClient *client;
     MThemeDaemon daemon;
-#ifdef HAVE_GCONF
     MGConfItem themeItem;
     MGConfItem locale;
-#endif
 };
 #endif

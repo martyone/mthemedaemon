@@ -17,36 +17,16 @@
 using namespace M::MThemeDaemonProtocol;
 
 
-#ifndef HAVE_GCONF
-#include <QTimer>
-#include "mexport.h"
-QString M_themeName;
-MLocalThemeDaemon *M_localDaemon;
-
-void M_CORE_EXPORT M_changeTheme(const QString &theme)
-{
-    M_themeName = theme;
-    QTimer::singleShot(0, M_localDaemon, SLOT(themeChangedSlot()));
-}
-#endif
-
 MLocalThemeDaemon::MLocalThemeDaemon(const QString &applicationName) :
-    daemon(MThemeDaemon::LocalDaemon)
-#ifdef HAVE_GCONF
-    ,
+    daemon(MThemeDaemon::LocalDaemon),
     themeItem("/meegotouch/theme/name"),
     locale("/meegotouch/i18n/language")
-#endif
+
 {
     QString theme =  M_THEME_DEFAULT;
     QString language = "";
-#if HAVE_GCONF
     theme = themeItem.value(M_THEME_DEFAULT).toString();
     language = locale.value("en_GB").toString();
-#else
-    M_themeName =  M_THEME_DEFAULT;
-    M_localDaemon = this;
-#endif
 
     QList<PixmapCacheEntry*> pixmapsToDelete;
     if ( daemon.activateTheme(theme, language, QList<MThemeDaemonClient *>(), pixmapsToDelete) == false ) {
@@ -56,11 +36,6 @@ MLocalThemeDaemon::MLocalThemeDaemon(const QString &applicationName) :
 
     client = new MThemeDaemonClient(NULL, applicationName, daemon.themeInheritanceChain());
     daemon.addClient(client);
-
-#ifdef HAVE_GCONF
-    connect(&themeItem, SIGNAL(valueChanged()), SLOT(themeChangedSlot()));
-    connect(&locale, SIGNAL(valueChanged()), SLOT(localeChanged()));
-#endif
 }
 
 void MLocalThemeDaemon::registerApplicationName(const QString &applicationName)
@@ -135,11 +110,7 @@ void MLocalThemeDaemon::themeChangedSlot()
     list.append(client);
 
     QList<PixmapCacheEntry*> pixmapsToDelete;
-#ifdef HAVE_GCONF
     if (daemon.activateTheme(themeItem.value().toString(), locale.value().toString(), list, pixmapsToDelete)) {
-#else
-    if (daemon.activateTheme(M_themeName, "", list, pixmapsToDelete)) {
-#endif
         while (!client->pixmapsToReload.isEmpty()) {
             PixmapIdentifier id = client->pixmapsToReload.takeLast();
             pixmapHandle(id.imageId, id.size);
@@ -149,20 +120,14 @@ void MLocalThemeDaemon::themeChangedSlot()
         qDeleteAll(pixmapsToDelete);
     } else {
         // theme change failed, so change the theme back also in gconf.
-#ifdef HAVE_GCONF
         qWarning() << "Could not change theme to" << themeItem.value().toString();
         themeItem.set(currentTheme());
-#else
-        qWarning() << "Could not change theme to" << M_themeName;
-        M_themeName = currentTheme();
-#endif
     }
     emit themeChangeCompleted();
 }
 
 void MLocalThemeDaemon::localeChanged()
 {
-#ifdef HAVE_GCONF
     QHash<MThemeDaemonClient *, QList<PixmapIdentifier> > pixmapsToReload;
     QList<MThemeDaemonClient *> clients;
     clients.append(client);
@@ -176,6 +141,5 @@ void MLocalThemeDaemon::localeChanged()
             qDebug() << "error";
         }
     }
-#endif
 }
 
