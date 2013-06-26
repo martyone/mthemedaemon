@@ -80,6 +80,10 @@ void BenchmarkRemoteClient::registerToServer()
 #ifdef PRINT_INFO_MESSAGES
     qDebug() << "INFO: registering to server";
 #endif
+    Packet version(Packet::ProtocolVersionPacket, packetsSent++);
+    version.setData(new Number(protocolVersion));
+    stream << version;
+
     Packet registration(Packet::RequestRegistrationPacket, packetsSent++);
     registration.setData(new String("benchmark-client"));
     stream << registration;
