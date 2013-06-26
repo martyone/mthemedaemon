@@ -66,7 +66,7 @@ public:
     void pixmapVerified(const QString& imageId, const QSize& size);
 
 signals:
-    void pixmapReady(const QString& theme, TestClient* client, quint32 handle, const QString&, const QSize&);
+    void pixmapReady(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString&, const QSize&);
 
 
 protected:
@@ -77,7 +77,7 @@ protected:
     void checkConsistency();
 
 private slots:
-    void pixmapChangedSlot(const QString &imageId, const QSize &size, Qt::HANDLE pixmapHandle);
+    void pixmapChangedSlot(const QString &imageId, const QSize &size, const MPixmapHandle &pixmapHandle);
     void themeChangedSlot(const QStringList &themeInheritance, const QStringList& libraryNames);
     void connected();
     void disconnected();

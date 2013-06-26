@@ -38,9 +38,9 @@ void ClientThread::run()
 {
     TestClient client(identifier);
     connect(&client,
-            SIGNAL(pixmapReady(const QString&, TestClient*, quint32, const QString&, const QSize&)),
-            manager, 
-            SLOT(pixmapReady(const QString&, TestClient*, quint32, const QString&, const QSize&)));
+            SIGNAL(pixmapReady(QString,TestClient*,MPixmapHandle,QString,QSize)),
+            manager,
+            SLOT(pixmapReady(QString,TestClient*,MPixmapHandle,QString,QSize)));
 
     exec();
 }
@@ -91,8 +91,8 @@ TestClient::TestClient(const QString &identifier) : identifier(identifier)
 
     currentTheme = daemon->themeInheritanceChain().at(0);
 
-    connect(daemon, SIGNAL(pixmapChanged(QString, QSize, Qt::HANDLE)),
-            SLOT(pixmapChangedSlot(QString, QSize, Qt::HANDLE)));
+    connect(daemon, SIGNAL(pixmapCreatedOrChanged(QString, QSize, MPixmapHandle)),
+            SLOT(pixmapChangedSlot(QString, QSize, MPixmapHandle)));
     connect(daemon, SIGNAL(themeChanged(QStringList, QStringList)),
             SLOT(themeChangedSlot(QStringList, QStringList)));
 
@@ -122,7 +122,7 @@ void TestClient::disconnected()
 //    QLocalSocket* socket = qobject_cast<QLocalSocket*>(sender());
 }
 
-void TestClient::pixmapChangedSlot(const QString &imageId, const QSize &size, Qt::HANDLE pixmapHandle)
+void TestClient::pixmapChangedSlot(const QString &imageId, const QSize &size, const MPixmapHandle &pixmapHandle)
 {
     emit pixmapReady(currentTheme, this, pixmapHandle, imageId, size);
     waitVerify.acquire();

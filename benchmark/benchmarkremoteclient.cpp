@@ -36,7 +36,7 @@ BenchmarkRemoteClient::BenchmarkRemoteClient() : packetsSent(0)
     connect(&socket, SIGNAL(disconnected()), SLOT(disconnected()));
     connect(&socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
-    connect(this, SIGNAL(pixmapReady(quint32,M::MThemeDaemonProtocol::PixmapIdentifier)), this, SLOT(updatePixmapStats(quint32,M::MThemeDaemonProtocol::PixmapIdentifier)));
+    connect(this, SIGNAL(pixmapReady(MPixmapHandle,M::MThemeDaemonProtocol::PixmapIdentifier)), this, SLOT(updatePixmapStats(MPixmapHandle,M::MThemeDaemonProtocol::PixmapIdentifier)));
 }
 
 BenchmarkRemoteClient::~BenchmarkRemoteClient()
@@ -96,7 +96,7 @@ M::MThemeDaemonProtocol::Packet BenchmarkRemoteClient::processOnePacket()
     case Packet::PixmapUpdatedPacket: {
         const PixmapHandle *handle = static_cast<const PixmapHandle *>(packet.data());
 
-        if(handle->pixmapHandle) {
+        if(handle->pixmapHandle.isValid()) {
             emit pixmapReady(handle->pixmapHandle, handle->identifier);
         } else {
             qWarning() << "ERROR: daemon returned null handle for" << handle->identifier.imageId;
@@ -114,8 +114,10 @@ M::MThemeDaemonProtocol::Packet BenchmarkRemoteClient::processOnePacket()
     return packet;
 }
 
-void BenchmarkRemoteClient::updatePixmapStats(quint32 handle, const M::MThemeDaemonProtocol::PixmapIdentifier& identifier)
+void BenchmarkRemoteClient::updatePixmapStats(const MPixmapHandle &handle, const M::MThemeDaemonProtocol::PixmapIdentifier& identifier)
 {
+    Q_UNUSED(handle);
+
     QMap<QString, RequestInfo>::iterator requestInfo = requestedPixmaps.find(identifier.imageId);
     Q_ASSERT(requestInfo != requestedPixmaps.end());
     requestedPixmaps.erase(requestInfo);

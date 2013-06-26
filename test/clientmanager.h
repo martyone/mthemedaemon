@@ -17,6 +17,7 @@
 #include <QProcess>
 #include <QSet>
 #include <QSize>
+#include "mpixmaphandle.h"
 
 class ClientThread;
 class TestClient;
@@ -46,11 +47,11 @@ private slots:
     void clientFinished();
     void changeThemeAndLocale();
 
-    void pixmapReady(const QString& theme, TestClient* client, quint32 handle, const QString& imageId, const QSize& size);
+    void pixmapReady(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size);
 
 private:
     void cleanup();
-    bool verifyPixmap(const QString& theme, TestClient* client, quint32 handle, const QString& imageId, const QSize& size);
+    bool verifyPixmap(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size);
 
     QStringList locales;
     QSet<ClientThread *> clients;

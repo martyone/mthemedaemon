@@ -11,6 +11,7 @@
 ****************************************************************************/
 
 #include <qnamespace.h>
+#include <QMetaType>
 #include <QString>
 #include <QSize>
 #include <QImage>
@@ -33,5 +34,7 @@ struct MPixmapHandle
 
     bool directMap;
 };
+
+Q_DECLARE_METATYPE(MPixmapHandle)
 
 #endif //MPIXMAPHANDLE_H

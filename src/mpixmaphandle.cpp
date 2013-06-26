@@ -18,7 +18,9 @@ MPixmapHandle::MPixmapHandle() :
     format(QImage::Format_Invalid),
     numBytes(0),
     directMap(false)
-{}
+{
+    qRegisterMetaType<MPixmapHandle>();
+}
 
 bool MPixmapHandle::isValid() const
 {

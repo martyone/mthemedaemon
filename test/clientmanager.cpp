@@ -257,7 +257,7 @@ void ClientManager::changeThemeAndLocale()
 #endif
 }
 
-void ClientManager::pixmapReady(const QString& theme, TestClient* client, quint32 handle, const QString& imageId, const QSize& size)
+void ClientManager::pixmapReady(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size)
 {
     if(!verifyPixmap(theme, client, handle, imageId, size)) {
         qWarning() << "ERROR:" << client->getId() << "- incorrect color found when verifying returned pixmap (" << imageId << ')';
@@ -269,10 +269,10 @@ void ClientManager::pixmapReady(const QString& theme, TestClient* client, quint3
     client->pixmapVerified(imageId, size);
 }
 
-bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, quint32 handle, const QString& imageId, const QSize& size)
+bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size)
 {
     // this is what we got from daemon
-    QPixmap daemon = QPixmap::fromX11Pixmap(handle, QPixmap::ImplicitlyShared);
+    QPixmap daemon = QPixmap::fromX11Pixmap(handle.xHandle, QPixmap::ImplicitlyShared);
 
     // this is what we have
     QPixmap clientPixmap(size);

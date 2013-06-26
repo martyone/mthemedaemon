@@ -28,6 +28,7 @@
 
 #include "common.h"
 
+class MPixmapHandle;
 
 class BenchmarkRemoteClient : public QObject
 {
@@ -38,7 +39,7 @@ public:
     ~BenchmarkRemoteClient();
 
 signals:
-    void pixmapReady(quint32 handle, const M::MThemeDaemonProtocol::PixmapIdentifier& identifier);
+    void pixmapReady(const MPixmapHandle &handle, const M::MThemeDaemonProtocol::PixmapIdentifier& identifier);
     void finished();
 
 public slots:
@@ -55,7 +56,7 @@ private slots:
     void disconnected();
     void registerToServer();
     void sendPacket();
-    void updatePixmapStats(quint32 handle, const M::MThemeDaemonProtocol::PixmapIdentifier& identifier);
+    void updatePixmapStats(const MPixmapHandle &handle, const M::MThemeDaemonProtocol::PixmapIdentifier& identifier);
     void readyRead();
     void printResults();
 
