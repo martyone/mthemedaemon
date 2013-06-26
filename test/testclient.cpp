@@ -13,11 +13,8 @@
 #include "testclient.h"
 #include "clientmanager.h"
 
-#include "mthemedaemon.h"
-#include "mthemedaemonprotocol.h"
 #include "mremotethemedaemon.h"
 #include "mremotethemedaemon_p.h"
-#include "mgconfitem.h"
 
 #include <stdlib.h>
 #include <QTimer>

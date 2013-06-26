@@ -15,7 +15,6 @@
 #include <QDir>
 #include <QTimer>
 #include <MGConfItem>
-#include "mthemedaemon.h"
 #include "keypresswaiter.h"
 #include "clientmanager.h"
 

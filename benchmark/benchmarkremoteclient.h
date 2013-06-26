@@ -24,7 +24,7 @@
 #include <QMap>
 #include <QTime>
 
-#include "mthemedaemonclient.h"
+#include "mthemedaemonprotocol.h"
 
 #include "common.h"
 

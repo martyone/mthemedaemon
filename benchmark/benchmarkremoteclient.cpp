@@ -19,11 +19,7 @@
 #include <QApplication>
 #include <QTextStream>
 
-#include "mthemedaemon.h"
-#include "mthemedaemonprotocol.h"
-
 #include "benchmarkremoteclient.h"
-#include "common.h"
 
 using namespace M::MThemeDaemonProtocol;
 
