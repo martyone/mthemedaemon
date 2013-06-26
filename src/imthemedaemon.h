@@ -16,8 +16,8 @@
 #include <QObject>
 #include <QSize>
 #include <QColor>
-#include "mnamespace.h"
 #include "mpixmaphandle.h"
+#include "mthemedaemonprotocol.h"
 
 class IMThemeDaemon : public QObject
 {

@@ -12,7 +12,6 @@
 
 #include "mlocalthemedaemon.h"
 #include "mthemedaemonprotocol.h"
-#include "mdebug.h"
 #include "mpixmaphandle.h"
 
 using namespace M::MThemeDaemonProtocol;
@@ -51,7 +50,7 @@ MLocalThemeDaemon::MLocalThemeDaemon(const QString &applicationName) :
 
     QList<PixmapCacheEntry*> pixmapsToDelete;
     if ( daemon.activateTheme(theme, language, QList<MThemeDaemonClient *>(), pixmapsToDelete) == false ) {
-        mWarning("MThemeDaemon") << "Could not activate the theme:" << theme;
+        qWarning() << "Could not activate the theme:" << theme;
     }
     Q_ASSERT(pixmapsToDelete.isEmpty());
 
@@ -151,10 +150,10 @@ void MLocalThemeDaemon::themeChangedSlot()
     } else {
         // theme change failed, so change the theme back also in gconf.
 #ifdef HAVE_GCONF
-        mWarning("MLocalThemeDaemon") << "Could not change theme to" << themeItem.value().toString();
+        qWarning() << "Could not change theme to" << themeItem.value().toString();
         themeItem.set(currentTheme());
 #else
-        mWarning("MLocalThemeDaemon") << "Could not change theme to" << M_themeName;
+        qWarning() << "Could not change theme to" << M_themeName;
         M_themeName = currentTheme();
 #endif
     }

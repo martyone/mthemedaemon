@@ -13,14 +13,12 @@
 #include "mremotethemedaemon.h"
 #include "mremotethemedaemon_p.h"
 #include "mthemedaemon.h"
-#include "mdebug.h"
 #include "mthemedaemonprotocol.h"
-#include "mapplication.h"
-#include "mwindow.h"
 #include <QDir>
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QSettings>
+#include <QApplication>
 
 #ifndef Q_OS_WIN
 # include <unistd.h>
@@ -48,10 +46,14 @@ MRemoteThemeDaemon::MRemoteThemeDaemon(const QString &applicationName, int timeo
         d->negotiateProtocolVersion();
         registerApplicationName(applicationName);
     } else {
-        mWarning("MRemoteThemeDaemon") << "Failed to connect to theme daemon (IPC)";
+        qWarning() << "Failed to connect to theme daemon (IPC)" << address;
     }
 
-    QString filename = M_INSTALL_SYSCONFDIR "/meegotouch/themedaemonpriorities.conf";
+#ifdef Q_OS_UNIX
+    QString filename = "/etc/meegotouch/themedaemonpriorities.conf";
+#else
+#error "need porting"
+#endif
     d->loadThemeDaemonPriorities(filename);
 }
 
@@ -204,7 +206,7 @@ quint64 MRemoteThemeDaemonPrivate::requestPixmap(const QString &imageId, const Q
     quint64 sequenceNumber;
     if (req != pixmapRequests.constEnd()) {
         sequenceNumber = req.value();
-        mWarning("MRemoteThemeDaemon") << "requested pixmap which already exists in the request queue.";
+        qWarning() << "requested pixmap which already exists in the request queue.";
     }
     else {
         sequenceNumber = ++sequenceCounter;
@@ -370,12 +372,12 @@ void MRemoteThemeDaemonPrivate::processOnePacket(const Packet &packet)
         //client tried to request/release a pixmap multiple times, or it did not 
         //send a registration package before requesting pixmaps
         //output the error message and remove pixmap request that caused the problems
-        mWarning("MRemoteThemeDaemon") << "Packet::ErrorPacket:" << static_cast<const String *>(packet.data())->string;
+        qWarning() << "Packet::ErrorPacket:" << static_cast<const String *>(packet.data())->string;
         pixmapRequests.remove(pixmapRequests.key(packet.sequenceNumber()));
     }break;
 
     default:
-        mWarning("MRemoteThemeDaemon") << "Couldn't process packet of type" << packet.type();
+        qWarning() << "Couldn't process packet of type" << packet.type();
         break;
     }
 }
@@ -431,6 +433,8 @@ void MRemoteThemeDaemonPrivate::themeChanged(const QStringList &themeInheritance
 
 qint32 MRemoteThemeDaemonPrivate::priority()
 {
+    // Commented out after extracting out of libmeegotouch
+#if 0
     if (MApplication::isPrestarted()) {
         return priorityPrestartedApplication;
     }
@@ -441,6 +445,9 @@ qint32 MRemoteThemeDaemonPrivate::priority()
     } else {
         return applicationSpecificPriorities.value(applicationName, priorityBackgroundApplication);
     }
+#else
+    return priorityForegroundApplication;
+#endif
 }
 
 void MRemoteThemeDaemonPrivate::loadThemeDaemonPriorities(const QString& filename)
