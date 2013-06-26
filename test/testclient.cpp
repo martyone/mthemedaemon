@@ -157,11 +157,11 @@ void TestClient::sendPacket()
 
         case RequestPixmap: {
             // this directory contains all icons for this theme
-            QDir themeIconDirectory = currentTheme + QDir::separator() + QString("meegotouch") + QDir::separator() + QString("icons");
+            QDir themeIconDirectory(currentTheme + QDir::separator() + QString("meegotouch") + QDir::separator() + QString("icons"));
             QStringList iconList = themeIconDirectory.entryList(QDir::Files);
 
             // this directory contains all images for this client
-            QDir imageDirectory = currentTheme + QDir::separator() + getImageDirectory();
+            QDir imageDirectory(currentTheme + QDir::separator() + getImageDirectory());
             QStringList imageList = imageDirectory.entryList(QDir::Files);
 
             // combine both lists as one, we'll request something from this list

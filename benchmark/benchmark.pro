@@ -1,3 +1,5 @@
+include(../common.pri)
+
 INCLUDEPATH += ../src
 DEPENDPATH += $$INCLUDEPATH
 TEMPLATE = app
@@ -7,12 +9,6 @@ QT += svg \
 !win32:CONFIG += link_pkgconfig
 PKGCONFIG += x11
 PKGCONFIG += mlite
-
-#DEFINES += PRINT_INFO_MESSAGES
-
-# Check for mixing of const and non-const iterators,
-# which can cause problems when built with some compilers:
-DEFINES += QT_STRICT_ITERATORS
 
 # Input
 SOURCES += benchmarkremoteclient.cpp \
@@ -56,5 +52,5 @@ linux* {
                ../src/utils.cpp
 }
 
-target.path = /opt/tests/mthemedaemon
+target.path = $$TESTS_PATH
 INSTALLS += target

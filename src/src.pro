@@ -1,21 +1,12 @@
+include(../common.pri)
+
 TEMPLATE = app
 TARGET = mthemedaemon
 
 QT += svg network
 
-contains(DEFINES, HAVE_MEEGOGRAPHICSSYSTEM) {
-    QT += meegographicssystemhelper
-}
-
 DEFINES += MTHEME_PRINT_DEBUG
 #DEFINES += CLOSE_ON_ENTER
-
-# enable QString optimizations
-DEFINES += QT_USE_FAST_CONCATENATION QT_USE_FAST_OPERATOR_PLUS
-
-# Check for mixing of const and non-const iterators, 
-# which can cause problems when built with some compilers:
-DEFINES += QT_STRICT_ITERATORS
 
 !win32:CONFIG += link_pkgconfig
 PKGCONFIG += x11

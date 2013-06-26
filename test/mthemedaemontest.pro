@@ -1,3 +1,5 @@
+include(../common.pri)
+
 INCLUDEPATH += ../src
 DEPENDPATH += $$INCLUDEPATH
 TEMPLATE = app
@@ -25,13 +27,13 @@ HEADERS += clientmanager.h \
            ../src/mpixmaphandle.h \
            ../src/mthemedaemonprotocol.h \
 
-target.path = /opt/tests/mthemedaemon
+target.path = $$TESTS_PATH
 INSTALLS += target
 
 wrapper.files = mthemedaemontest
-wrapper.path = /opt/tests/mthemedaemon
+wrapper.path = $$TESTS_PATH
 INSTALLS += wrapper
 
 themes.files = themes
-themes.path = /opt/tests/mthemedaemon
+themes.path = $$TESTS_PATH
 INSTALLS += themes

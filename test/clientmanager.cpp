@@ -335,7 +335,7 @@ bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const
     }
     else
     {
-        QDir imageDirectory = theme + QDir::separator() + client->getImageDirectory();
+        QDir imageDirectory(theme + QDir::separator() + client->getImageDirectory());
         QString filename = imageDirectory.absolutePath() + QDir::separator() + imageId + ".png";
         if(!clientPixmap.load(filename, "PNG")) {
             qWarning() << "ERROR: Failed to construct PNG image:" << filename;
