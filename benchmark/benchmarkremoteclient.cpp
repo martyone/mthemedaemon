@@ -111,6 +111,10 @@ M::MThemeDaemonProtocol::Packet BenchmarkRemoteClient::processOnePacket()
         break;
     case Packet::ThemeDaemonStatusPacket:
         break;
+    case Packet::ErrorPacket:
+        qWarning() << "ERROR: daemon returned error:"
+            << static_cast<const String *>(packet.data())->string;
+        break;
     default:
         break;
     }

@@ -170,7 +170,9 @@ void ClientManager::spawnClient()
     clients.insert(client);
 
     client->start();
+#ifdef PRINT_INFO_MESSAGES
     qDebug() << "INFO: ClientManager - Client" << client->getId() << "started, number of active clients:" << clients.count();
+#endif
 }
 
 void ClientManager::start()
@@ -187,8 +189,10 @@ void ClientManager::start()
 
 void ClientManager::stop()
 {
+    if (!shutdown) {
+        QTextStream(stdout) << "Shutting down..." << endl;
+    }
     shutdown = true;
-    qDebug() << "INFO: ClientManager - Shutting down...";
 
     if (clients.count() == 0) {
         qApp->exit(error ? 1 : 0);
@@ -208,7 +212,9 @@ void ClientManager::clientFinished()
     clients.remove(client);
     client->exit();
     client->wait();
+#ifdef PRINT_INFO_MESSAGES
     qDebug() << "INFO: ClientManager - Client" << client->getId() << "finished, number of active clients:" << clients.count();
+#endif
     delete client;
     if (shutdown) {
         if (clients.count() == 0) {

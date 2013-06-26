@@ -25,7 +25,7 @@ class KeyPressWaiter : public QThread
 public:
 
     void run() {
-        qDebug() << "Hit enter to exit..";
+        QTextStream(stdout) << "Hit enter to exit..." << endl;
         QTextStream qin(stdin, QFile::ReadOnly);
         qin.readLine();
     }

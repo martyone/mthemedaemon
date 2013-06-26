@@ -141,7 +141,7 @@ void TestClient::pixmapVerified(const QString& imageId, const QSize& size)
     } else if(readyPixmaps.contains(identifier)) {
         // this pixmap was already ready, so it is just updated (probably due to theme change)
     } else {
-        qWarning() << "ERROR:" << imageId << "- pixmap reply to unknown request";
+        qWarning() << "ERROR:" << this->identifier << "-" << imageId << "- pixmap reply to unknown request";
         ClientManager::instance()->stop(1);
     }
 }
@@ -211,6 +211,10 @@ void TestClient::sendPacket()
         operationCount--;
         QTimer::singleShot(TASK_EXECUTION_INTERVAL, this, SLOT(sendPacket()));
     } else if (readyPixmaps.count() > 0 || requestedPixmaps.count() > 0) {
+
+#ifdef PRINT_INFO_MESSAGES
+        qDebug() << "INFO:" << identifier << "- Releasing";
+#endif
 
         while (readyPixmaps.count() > 0) {
             PixmapIdentifier toRemove = *readyPixmaps.begin();
