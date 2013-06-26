@@ -14,7 +14,7 @@
 #include <QApplication>
 #include <QDir>
 #include <MGConfItem>
-#include <theme/mthemedaemon.h>
+#include "mthemedaemon.h"
 #include "keypresswaiter.h"
 #include "clientmanager.h"
 
