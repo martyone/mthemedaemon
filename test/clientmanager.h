@@ -14,6 +14,7 @@
 #define CLIENTMANAGER_H
 
 #include <QObject>
+#include <QPointer>
 #include <QProcess>
 #include <QSet>
 #include <QSize>
@@ -33,6 +34,10 @@ class ClientManager : public QObject
 public:
     ClientManager(QProcess &process);
     ~ClientManager();
+
+    static ClientManager *instance();
+
+    void stop(bool error);
 
     static void cleanup();
     static void setup();
@@ -59,6 +64,8 @@ private:
     QSet<ClientThread *> clients;
     bool shutdown;
     QProcess &themedaemon;
+    bool error;
+    static QPointer<ClientManager> s_instance;
 };
 
 #endif

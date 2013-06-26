@@ -142,6 +142,7 @@ void TestClient::pixmapVerified(const QString& imageId, const QSize& size)
         // this pixmap was already ready, so it is just updated (probably due to theme change)
     } else {
         qWarning() << "ERROR:" << imageId << "- pixmap reply to unknown request";
+        ClientManager::instance()->stop(1);
     }
 }
 
@@ -265,6 +266,7 @@ void TestClient::checkConsistency()
     daemon->d_ptr->stream << packet;
     if (!daemon->d_ptr->socket.flush()) {
         qWarning() << "ERROR:" << identifier << "- failed to write to socket" << daemon->d_ptr->socket.error();
+        ClientManager::instance()->stop(1);
     }
 
     Packet packet2 = daemon->d_ptr->waitForPacket(sequenceNr);
@@ -273,6 +275,7 @@ void TestClient::checkConsistency()
 
     if (!consistency) {
         qWarning() << "ERROR:" << identifier << "- Consistency check FAILED!";
+        ClientManager::instance()->stop(1);
     }
 }
 
@@ -297,6 +300,7 @@ bool TestClient::isDataConsistent(const M::MThemeDaemonProtocol::ClientList *lis
             // check that the daemon has correct amount of pixmaps in load queue
             if (daemon.count() != client.count()) {
                 qWarning() << "ERROR:" << identifier << "- incorrect pixmap count, Themedaemon says:" << daemon.count() << "and client says:" << client.count();
+                ClientManager::instance()->stop(1);
                 break;
             }
 
@@ -305,6 +309,7 @@ bool TestClient::isDataConsistent(const M::MThemeDaemonProtocol::ClientList *lis
                 if (!client.contains(pixmapIdentifier)) {
                     // pixmap not found from client, but themedaemon reported it -> inconsistent state
                     qWarning() << "ERROR:" << identifier << "- pixmap not found from client-side list:" << pixmapIdentifier.imageId << '(' << pixmapIdentifier.size << ')';
+                    ClientManager::instance()->stop(1);
                     break;
                 } else {
                     // found, we can remove this one from client list
@@ -317,6 +322,7 @@ bool TestClient::isDataConsistent(const M::MThemeDaemonProtocol::ClientList *lis
                 if (!daemon.contains(pixmapIdentifier)) {
                     // pixmap not found from daemon-side list, but exists in client-side list -> inconsistent state
                     qWarning() << "ERROR:" << identifier << "- pixmap not found from daemon-side list:" << pixmapIdentifier.imageId << '(' << pixmapIdentifier.size << ')';
+                    ClientManager::instance()->stop(1);
                     break;
                 }
             }

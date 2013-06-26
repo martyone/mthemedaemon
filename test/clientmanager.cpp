@@ -24,6 +24,8 @@
 
 #define CLIENT_ID(client) "Client (0x" + QString::number((quint32) client, 16) + ')'
 
+QPointer<ClientManager> ClientManager::s_instance;
+
 void removeDirectoryRecursive(const QString &path)
 {
     QDir root(path);
@@ -136,12 +138,24 @@ void ClientManager::setup()
 
 ClientManager::ClientManager(QProcess &process) : shutdown(false), themedaemon(process), error(false)
 {
+    s_instance = this;
     // start the test after 1 sec (allow themedaemon to get online)
     QTimer::singleShot(1000, this, SLOT(start()));
 }
 
 ClientManager::~ClientManager()
 {
+}
+
+ClientManager *ClientManager::instance()
+{
+    return s_instance;
+}
+
+void ClientManager::stop(bool error)
+{
+    this->error |= error;
+    stop();
 }
 
 void ClientManager::spawnClient()
@@ -177,7 +191,7 @@ void ClientManager::stop()
     qDebug() << "INFO: ClientManager - Shutting down...";
 
     if (clients.count() == 0) {
-        qApp->quit();
+        qApp->exit(error ? 1 : 0);
     }
 }
 
@@ -198,7 +212,7 @@ void ClientManager::clientFinished()
     delete client;
     if (shutdown) {
         if (clients.count() == 0) {
-            qApp->quit();
+            qApp->exit(error ? 1 : 0);
         }
     }
 }
@@ -217,7 +231,7 @@ void ClientManager::checkConsistency()
             thread->wait();
             delete thread;
         }
-        qApp->quit();
+        qApp->exit(1);
     }
 
     if (shutdown == false) {
@@ -259,6 +273,7 @@ void ClientManager::pixmapReady(const QString& theme, TestClient* client, const 
 {
     if(!verifyPixmap(theme, client, handle, imageId, size)) {
         qWarning() << "ERROR:" << client->getId() << "- incorrect color found when verifying returned pixmap (" << imageId << ')';
+        stop(1);
     } else {
 #ifdef PRINT_INFO_MESSAGES
         qDebug() << "INFO:" << client->getId() << "- pixmap comparison OK (" << imageId << ')';
@@ -304,6 +319,7 @@ bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const
         if(!renderer.isValid())
         {
             qWarning() << "ERROR: Failed to construct SVG renderer for:" << filename;
+            stop(1);
             return false;
         }
         // render pixmap
@@ -314,8 +330,10 @@ bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const
     {
         QDir imageDirectory = theme + QDir::separator() + client->getImageDirectory();
         QString filename = imageDirectory.absolutePath() + QDir::separator() + imageId + ".png";
-        if(!clientPixmap.load(filename, "PNG"))
+        if(!clientPixmap.load(filename, "PNG")) {
             qWarning() << "ERROR: Failed to construct PNG image:" << filename;
+            stop(1);
+        }
     }
 
     // make sure that the pixel in the center of the pixmap is equal (these are always one-color images)
@@ -327,6 +345,7 @@ bool ClientManager::verifyPixmap(const QString& theme, TestClient* client, const
 
     if(color != color2) {
         qWarning() << "ERROR: Colors don't match:" << theme << QColor(color) << QColor(color2);
+        stop(1);
         return false;
     }
 
