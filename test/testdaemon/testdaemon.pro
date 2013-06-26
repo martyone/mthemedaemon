@@ -1,7 +1,3 @@
-include(../../../mkspecs/common.pri)
-
-INCLUDEPATH += . ../../../src/include ../../../src ../../../src/corelib/core ../../../src/corelib/
-
 TEMPLATE = app
 DEPENDPATH += .
 
@@ -20,34 +16,48 @@ DEFINES += QT_USE_FAST_CONCATENATION QT_USE_FAST_OPERATOR_PLUS
 # which can cause problems when built with some compilers:
 DEFINES += QT_STRICT_ITERATORS
 
-# Input
-SOURCES += ../../main.cpp \
-           ../../mthemedaemonserver.cpp \
-           ../../../src/corelib/theme/mthemedaemon.cpp \
-           ../../../src/corelib/theme/mcommonpixmaps.cpp \
-           ../../../src/corelib/theme/mimagedirectory.cpp \
-           ../../../src/corelib/theme/mthemedaemonclient.cpp \
-           ../../../src/corelib/theme/mthemedaemonprotocol.cpp \
-           ../../../src/corelib/theme/mthemeresourcemanager.cpp \
-           ../../../src/corelib/core/mcpumonitor.cpp \
+!win32:CONFIG += link_pkgconfig
+PKGCONFIG += x11
+PKGCONFIG += mlite
+PKGCONFIG += libsystemd-daemon
 
-contains(DEFINES, HAVE_GCONF) {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += gconf-2.0
-    SOURCES += ../../../src/corelib/core/mgconfitem.cpp
-}
-} else {
-    SOURCES += ../../../src/corelib/core/mgconfitem_stub.cpp
-}
+# Input
+SOURCES += ../../src/main.cpp \
+           ../../src/mthemedaemonserver.cpp \
+           ../../src/mthemedaemon.cpp \
+           ../../src/mcommonpixmaps.cpp \
+           ../../src/mimagedirectory.cpp \
+           ../../src/mthemedaemonclient.cpp \
+           ../../src/mthemedaemonprotocol.cpp \
+           ../../src/mpixmaphandle.cpp \
+           ../../src/mcpumonitor.cpp \
+           ../../src/mgraphicssystemhelper.cpp \
+           ../../src/msystemdirectories.cpp \
+           ../../src/logger.cpp \
 
 HEADERS += \
-           ../../mthemedaemonserver.h \
-           ../../../src/corelib/theme/mthemedaemon.h \
-           ../../../src/corelib/theme/mcommonpixmaps.h \
-           ../../../src/corelib/theme/mimagedirectory.h \
-           ../../../src/corelib/theme/mthemedaemonclient.h \
-           ../../../src/corelib/theme/mthemedaemonprotocol.h \
-           ../../../src/corelib/theme/mthemeresourcemanager.h \
-           ../../../src/corelib/core/mgconfitem.h \
-           ../../../src/corelib/core/mcpumonitor.h \
+           ../../src/mthemedaemonserver.h \
+           ../../src/mthemedaemon.h \
+           ../../src/mcommonpixmaps.h \
+           ../../src/mimagedirectory.h \
+           ../../src/mthemedaemonclient.h \
+           ../../src/mthemedaemonprotocol.h \
+           ../../src/mpixmaphandle.h \
+           ../../src/mcpumonitor.h \
+           ../../src/mgraphicssystemhelper.h \
+           ../../src/msystemdirectories.h \
+           ../../src/logger.h \
 
+linux* {
+    HEADERS += ../../src/inotify.h \
+               ../../src/inotify.watch.h \
+               ../../src/fstreenode.h \
+               ../../src/utils.h
+    SOURCES += ../../src/inotify.cpp \
+               ../../src/inotify.watch.cpp \
+               ../../src/fstreenode.cpp \
+               ../../src/utils.cpp
+}
+
+target.path = /opt/tests/mthemedaemon/testdaemon
+INSTALLS += target

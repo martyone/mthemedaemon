@@ -27,3 +27,21 @@ Files:
     - "%{_libdir}/systemd/user/mthemedaemon.service"
     - "%{_sysconfdir}/xdg/autostart/mthemedaemon.desktop"
     - "%{_sysconfdir}/meegotouch/themedaemonpriorities.conf"
+SubPackages:
+    - Name: benchmark-tests
+      Summary: Test suite for mthemedaemon - benchmarks
+      Group: Development/Libraries
+      Description: |
+          This package contains benchmark tests for mthemedaemon
+      Files:
+          - "/opt/tests/mthemedaemon/benchmark"
+    - Name: unit-tests
+      Summary: Test suite for mthemedaemon - unit tests
+      Group: Development/Libraries
+      Description: |
+          This package contains unit tests for mthemedaemon
+      Files:
+          - "/opt/tests/mthemedaemon/mthemedaemontest"
+          - "/opt/tests/mthemedaemon/mthemedaemontest.bin"
+          - "/opt/tests/mthemedaemon/testdaemon/testdaemon"
+          - "/opt/tests/mthemedaemon/themes"

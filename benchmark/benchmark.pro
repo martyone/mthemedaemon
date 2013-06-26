@@ -2,19 +2,18 @@
 DEFINES += THEMEDIR=\\\"\"/usr/share/themes\"\\\"
 
 INCLUDEPATH += . \
-    ../ \
-    ../../src/include \
-    ../../src \
-    ../../src/corelib \
-    ../../src/corelib/core \
-    ../../src/corelib/theme
+    ../src \
 
 DEPENDPATH += $$INCLUDEPATH
-QMAKE_LIBDIR += ../lib
+QMAKE_LIBDIR += ../src
 TEMPLATE = app
 DEPENDPATH += .
 QT += svg \
     network
+
+!win32:CONFIG += link_pkgconfig
+PKGCONFIG += x11
+PKGCONFIG += mlite
 
 #DEFINES += PRINT_INFO_MESSAGES
 
@@ -24,38 +23,45 @@ DEFINES += QT_STRICT_ITERATORS
 
 # Input
 SOURCES += benchmarkremoteclient.cpp \
-    ../../src/corelib/theme/mthemedaemon.cpp \
-    ../../src/corelib/theme/mcommonpixmaps.cpp \
-    ../../src/corelib/theme/mimagedirectory.cpp \
-    ../../src/corelib/theme/mthemedaemonclient.cpp \
-    ../../src/corelib/theme/mthemedaemonprotocol.cpp \
-    ../../src/corelib/theme/mthemeresourcemanager.cpp \
-    ../../src/corelib/core/mcpumonitor.cpp \
-    main.cpp \
     benchmarklocalclient.cpp \
+    ../src/mthemedaemon.cpp \
+    ../src/mlocalthemedaemon.cpp \
+    ../src/mcommonpixmaps.cpp \
+    ../src/mimagedirectory.cpp \
+    ../src/mthemedaemonclient.cpp \
+    ../src/mpixmaphandle.cpp \
+    ../src/mthemedaemonprotocol.cpp \
+    ../src/mcpumonitor.cpp \
+    ../src/mgraphicssystemhelper.cpp \
+    ../src/msystemdirectories.cpp \
+    main.cpp \
     common.cpp \
-    ../../src/corelib/theme/mlocalthemedaemon.cpp
-
-contains(DEFINES, HAVE_GCONF) {
-    SOURCES += ../../src/corelib/core/mgconfitem.cpp
-
-    CONFIG += link_pkgconfig
-    PKGCONFIG += gconf-2.0
-} else {
-    SOURCES += ../../src/corelib/core/mgconfitem_stub.cpp
-}
 
 HEADERS += benchmarkremoteclient.h \
-    ../../src/corelib/theme/imthemedaemon.h \
-    ../../src/corelib/theme/mthemedaemon.h \
-    ../../src/corelib/theme/mcommonpixmaps.h \
-    ../../src/corelib/theme/mimagedirectory.h \
-    ../../src/corelib/theme/mthemedaemonclient.h \
-    ../../src/corelib/theme/mthemedaemonprotocol.h \
-    ../../src/corelib/theme/mthemeresourcemanager.h \
-    ../../src/corelib/core/mgconfitem.h \
-    ../../src/corelib/core/mcpumonitor.h \
     benchmarklocalclient.h \
+    ../src/mthemedaemon.h \
+    ../src/imthemedaemon.h \
+    ../src/mlocalthemedaemon.h \
+    ../src/mcommonpixmaps.h \
+    ../src/mimagedirectory.h \
+    ../src/mthemedaemonclient.h \
+    ../src/mpixmaphandle.h \
+    ../src/mthemedaemonprotocol.h \
+    ../src/mcpumonitor.h \
+    ../src/mgraphicssystemhelper.h \
+    ../src/msystemdirectories.h \
     common.h \
-    ../../src/corelib/theme/mthemedaemon.h \
-    ../../src/corelib/theme/mlocalthemedaemon.h
+
+linux* {
+    HEADERS += ../src/inotify.h \
+               ../src/inotify.watch.h \
+               ../src/fstreenode.h \
+               ../src/utils.h
+    SOURCES += ../src/inotify.cpp \
+               ../src/inotify.watch.cpp \
+               ../src/fstreenode.cpp \
+               ../src/utils.cpp
+}
+
+target.path = /opt/tests/mthemedaemon
+INSTALLS += target
