@@ -16,17 +16,17 @@
 
 #include <QFile>
 #include <QDir>
+#include <QProcessEnvironment>
 
 using namespace M::MThemeDaemonProtocol;
 
 namespace {
+    const bool unitTestRun =
+        QProcessEnvironment::systemEnvironment().contains("MTHEMEDAEMON_UNIT_TEST_RUN");
+
     // before loading one item from the queue the cpu usage must
     // be below the given percentage
-#ifdef UNIT_TEST
-    const int maximumCpuUsageBeforeLoadingOneItem = 100;
-#else
-    const int maximumCpuUsageBeforeLoadingOneItem = 30;
-#endif
+    const int maximumCpuUsageBeforeLoadingOneItem = unitTestRun ? 100 : 30;
 
     // when the cpu has been busy wait that many milliseconds before
     // doing the next check
@@ -42,19 +42,11 @@ namespace {
 
     // before sending the most used pixmaps the device should be pretty
     // idle as this wakes up all processes connected to the themedaemon
-#ifdef UNIT_TEST
-    const int maximumCpuUsageBeforeSendingMostUsed = 100;
-#else
-    const int maximumCpuUsageBeforeSendingMostUsed = 10;
-#endif
+    const int maximumCpuUsageBeforeSendingMostUsed = unitTestRun ? 100 : 10;
 
     // check the cpu usage for that many seconds before deciding if
     // a most used package can be sent
-#ifdef UNIT_TEST
-    const int delayBeforeSendingMostUsed = 100;
-#else
-    const int delayBeforeSendingMostUsed = 5000;
-#endif
+    const int delayBeforeSendingMostUsed = unitTestRun ? 100 : 5000;
 }
 
 

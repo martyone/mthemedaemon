@@ -108,7 +108,6 @@ fi
 %defattr(-,root,root,-)
 /opt/tests/mthemedaemon/mthemedaemontest
 /opt/tests/mthemedaemon/mthemedaemontest.bin
-/opt/tests/mthemedaemon/testdaemon/testdaemon
 /opt/tests/mthemedaemon/tests.xml
 /opt/tests/mthemedaemon/themes
 # >> files unit-tests

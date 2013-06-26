@@ -33,10 +33,11 @@ int main(int argc, char **argv)
     bool result = false;
     QProcess td;
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    environment.insert("MTHEMEDAEMON_UNIT_TEST_RUN", "1");
     environment.insert("MTHEMEDAEMON_THEME_DIRECTORY",
             QDir().absoluteFilePath(THEME_ROOT_DIRECTORY));
     td.setProcessEnvironment(environment);
-    td.start("./testdaemon/testdaemon", QStringList()
+    td.start("mthemedaemon", QStringList()
             << "-address" << "/tmp/mthemedaemon-tests.socket");
     // start theme daemon
     if (td.waitForStarted()) {
