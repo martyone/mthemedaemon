@@ -68,14 +68,24 @@ MThemeDaemon::MThemeDaemon( )
 
 QString MThemeDaemon::systemThemeDirectory()
 {
+    static QString dir;
+    if (!dir.isNull()) {
+        return dir;
+    }
+
+    if (dir = qgetenv("MTHEMEDAEMON_THEME_DIRECTORY"), !dir.isEmpty()) {
+        qWarning("%s: MTHEMEDAEMON_THEME_DIRECTORY: '%s'", Q_FUNC_INFO, qPrintable(dir));
+        return dir;
+    }
+
 #ifdef Q_OS_WIN
     QDir appDir(QCoreApplication::applicationDirPath());
     appDir.cdUp();
     appDir.cd("share");
     appDir.cd("themes");
-    return appDir.absolutePath();
+    return dir = appDir.absolutePath();
 #else
-    return "/usr/share/themes";
+    return dir = "/usr/share/themes";
 #endif
 }
 
@@ -326,7 +336,7 @@ bool MThemeDaemon::activateTheme(const QString &newTheme, const QString &locale,
 
     QString linkToCurrentTheme = MThemeDaemon::systemThemeCacheDirectory() + QDir::separator() + "currentTheme";
     QFile::remove(linkToCurrentTheme);
-    QFile::link(QString("/usr/share/themes") + QDir::separator() + themeInheritance.first(), linkToCurrentTheme);
+    QFile::link(systemThemeDirectory() + QDir::separator() + themeInheritance.first(), linkToCurrentTheme);
 
 #ifdef MTHEME_PRINT_DEBUG
     qDebug() << Q_FUNC_INFO << "    New theme inheritance chain is" << themeInheritance;
