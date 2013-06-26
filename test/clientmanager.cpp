@@ -94,11 +94,10 @@ void createSVGFile(const QString& path, int index)
     file.close();
 }
 
-ClientManager::ClientManager(QProcess &process) : shutdown(false), themedaemon(process)
-{
-    locales.append("en");
-    locales.append("fi");
+const QStringList ClientManager::locales = QStringList() << "en" << "fi";
 
+void ClientManager::setup()
+{
     cleanup();
 
     int count = 50;
@@ -133,15 +132,16 @@ ClientManager::ClientManager(QProcess &process) : shutdown(false), themedaemon(p
             }
         }
     }
+}
 
+ClientManager::ClientManager(QProcess &process) : shutdown(false), themedaemon(process), error(false)
+{
     // start the test after 1 sec (allow themedaemon to get online)
     QTimer::singleShot(1000, this, SLOT(start()));
 }
 
 ClientManager::~ClientManager()
 {
-    // perform cleanup
-    cleanup();
 }
 
 void ClientManager::spawnClient()

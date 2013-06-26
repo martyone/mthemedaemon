@@ -34,6 +34,9 @@ public:
     ClientManager(QProcess &process);
     ~ClientManager();
 
+    static void cleanup();
+    static void setup();
+
 protected:
     void spawnClient();
 
@@ -50,10 +53,9 @@ private slots:
     void pixmapReady(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size);
 
 private:
-    void cleanup();
     bool verifyPixmap(const QString& theme, TestClient* client, const MPixmapHandle &handle, const QString& imageId, const QSize& size);
 
-    QStringList locales;
+    static const QStringList locales;
     QSet<ClientThread *> clients;
     bool shutdown;
     QProcess &themedaemon;

@@ -27,6 +27,8 @@ int main(int argc, char **argv)
     MGConfItem theme("/meegotouch/theme/name");
     theme.set(themeName);
 
+    ClientManager::setup();
+
     bool result = false;
     QProcess td;
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
@@ -57,6 +59,8 @@ int main(int argc, char **argv)
     }
 
     theme.unset();
+
+    ClientManager::cleanup();
 
     return result;
 }
