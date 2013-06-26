@@ -80,7 +80,7 @@ TestClient::TestClient(const QString &identifier) : identifier(identifier)
         }
     }
 
-    daemon = new MRemoteThemeDaemon(identifier, 0);
+    daemon = new MRemoteThemeDaemon(identifier, 0, "/tmp/mthemedaemon-tests.socket");
     if (!daemon->connected()) {
         qCritical("Could not connect to remote themedaemon");
         return;

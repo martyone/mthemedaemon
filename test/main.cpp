@@ -29,7 +29,12 @@ int main(int argc, char **argv)
 
     bool result = false;
     QProcess td;
-    td.start("./testdaemon/testdaemon", QStringList());
+    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    environment.insert("MTHEMEDAEMON_THEME_DIRECTORY",
+            QDir().absoluteFilePath(THEME_ROOT_DIRECTORY));
+    td.setProcessEnvironment(environment);
+    td.start("./testdaemon/testdaemon", QStringList()
+            << "-address" << "/tmp/mthemedaemon-tests.socket");
     // start theme daemon
     if (td.waitForStarted()) {
         // This is the class that handles the test
