@@ -208,7 +208,7 @@ void ClientManager::clientFinished()
 {
     ClientThread *client = static_cast<ClientThread *>(sender());
 
-    removeDirectoryRecursive(QString(IMAGESDIR) + QDir::separator() + client->getId());
+    removeDirectoryRecursive(QString("./images") + QDir::separator() + client->getId());
     clients.remove(client);
     client->exit();
     client->wait();

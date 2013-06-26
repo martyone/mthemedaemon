@@ -1,8 +1,6 @@
 TEMPLATE = app
 TARGET = mthemedaemon
 
-DEPENDPATH += .
-
 QT += svg network
 
 contains(DEFINES, HAVE_MEEGOGRAPHICSSYSTEM) {
@@ -63,18 +61,9 @@ linux* {
                utils.cpp
 }
 
-QMAKE_EXTRA_TARGETS += check
-check.depends = $$TARGET
-check.commands = $$system(true)
-
-QMAKE_EXTRA_TARGETS += check-xml
-check-xml.depends = $$TARGET
-check-xml.commands = $$system(true)
-
 target.path = /usr/bin
 INSTALLS += target
 
 themedaemonpriorities.files = themedaemonpriorities.conf
 themedaemonpriorities.path = /etc/meegotouch
 INSTALLS += themedaemonpriorities
-

@@ -9,12 +9,6 @@ QT += svg network
 PKGCONFIG += x11
 PKGCONFIG += mlite
 
-# override theme directory
-DEFINES += IMAGESDIR=\\\"./images\\\"
-
-# we want to be able to access private classes
-DEFINES += UNIT_TEST
-
 # Input
 SOURCES += main.cpp \
            clientmanager.cpp \
@@ -30,8 +24,6 @@ HEADERS += clientmanager.h \
            ../src/imthemedaemon.h \
            ../src/mpixmaphandle.h \
            ../src/mthemedaemonprotocol.h \
-
-SUBDIRS += testdaemodrgtrgn
 
 target.path = /opt/tests/mthemedaemon
 INSTALLS += target

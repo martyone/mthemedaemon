@@ -1,13 +1,6 @@
-# hardcoded to avoid dependency on files created by configure
-DEFINES += THEMEDIR=\\\"\"/usr/share/themes\"\\\"
-
-INCLUDEPATH += . \
-    ../src \
-
+INCLUDEPATH += ../src
 DEPENDPATH += $$INCLUDEPATH
-QMAKE_LIBDIR += ../src
 TEMPLATE = app
-DEPENDPATH += .
 QT += svg \
     network
 

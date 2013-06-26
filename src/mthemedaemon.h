@@ -76,9 +76,7 @@ private:
     MThemeDaemon( ); // just make sure nobody tries to construct broken class
 #endif
 
-#ifdef UNIT_TEST
     friend class Ut_MCommonPixmaps;
-#endif
 };
 //! \internal_end
 #endif

@@ -52,19 +52,13 @@ public:
     virtual bool hasPendingRequests() const;
 
 private:
-#ifdef UNIT_TEST
     friend class TestClient;
-#endif
     Q_DECLARE_PRIVATE(MRemoteThemeDaemon)
     MRemoteThemeDaemonPrivate *const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void connectionDataAvailable())
     Q_PRIVATE_SLOT(d_func(), void emitThemeChangedSignal())
     Q_PRIVATE_SLOT(d_func(), void emitThemeChangeCompletedSignal())
-
-#ifdef UNIT_TEST
-    friend class Ut_MRemoteThemeDaemon;
-#endif
 };
 
 #endif
