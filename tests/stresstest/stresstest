@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+TMP_DIR="/tmp/mthemedaemon-stresstest.tmp"
+
+rm -rf ${TMP_DIR}
+cp -r $(dirname $0)/data/stresstest ${TMP_DIR}
+cd ${TMP_DIR}
+exec $0.bin "${@}"

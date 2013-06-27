@@ -17,5 +17,3 @@ MTHEMEDAEMON_BUILD_DIR = $$PWD/build
 DESTDIR_LIB = $$MTHEMEDAEMON_BUILD_DIR/lib
 
 LIBS += -L$$DESTDIR_LIB
-
-TESTS_PATH = "/opt/tests/mthemedaemon"

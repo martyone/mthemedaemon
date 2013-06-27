@@ -1,7 +1,4 @@
-include(../common.pri)
-include(../src/mthemedaemonlib.pri)
-
-TEMPLATE = app
+include(../testapplication.pri)
 
 # Input
 SOURCES += benchmarkremoteclient.cpp \
@@ -12,6 +9,3 @@ SOURCES += benchmarkremoteclient.cpp \
 HEADERS += benchmarkremoteclient.h \
     benchmarklocalclient.h \
     common.h \
-
-target.path = $$TESTS_PATH
-INSTALLS += target

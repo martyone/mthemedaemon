@@ -1,8 +1,6 @@
-include(../common.pri)
-include(../src/mthemedaemonlib.pri)
+include(../testapplication.pri)
 
-TEMPLATE = app
-TARGET = mthemedaemontest.bin
+TARGET = stresstest.bin
 
 # Input
 SOURCES += main.cpp \
@@ -12,13 +10,10 @@ SOURCES += main.cpp \
 HEADERS += clientmanager.h \
            testclient.h \
 
-target.path = $$TESTS_PATH
-INSTALLS += target
-
-wrapper.files = mthemedaemontest
+wrapper.files = stresstest
 wrapper.path = $$TESTS_PATH
 INSTALLS += wrapper
 
 themes.files = themes
-themes.path = $$TESTS_PATH
+themes.path = $$TESTS_DATA_PATH
 INSTALLS += themes

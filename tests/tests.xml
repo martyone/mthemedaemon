@@ -7,9 +7,9 @@
 
             <description>mthemedaemon tests</description>
 
-            <case name="mthemedaemontest">
-                <description>Tests mthemedaemon</description>
-                <step>/opt/tests/mthemedaemon/mthemedaemontest 10</step>
+            <case name="stresstest">
+                <description>Tests mthemedaemon under load</description>
+                <step>/opt/tests/mthemedaemon/stresstest 10</step>
             </case>
 
         </set>

@@ -1,8 +1,9 @@
-include(../common.pri)
+include(tests_common.pri)
 
 TEMPLATE = subdirs
-
-SUBDIRS = mthemedaemontest.pro \
+SUBDIRS = \
+        benchmark \
+        stresstest \
 
 tests_xml.files = tests.xml
 tests_xml.path = $$TESTS_PATH

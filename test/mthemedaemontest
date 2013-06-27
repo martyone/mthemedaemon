@@ -1,8 +1,0 @@
-#!/bin/bash -e
-
-TMP_DIR="/tmp/mthemedaemon-test.tmp"
-
-rm -rf ${TMP_DIR}
-cp -r $(dirname $0) ${TMP_DIR}
-cd ${TMP_DIR}
-exec ./$(basename $0).bin "${@}"
