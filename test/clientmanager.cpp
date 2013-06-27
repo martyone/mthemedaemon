@@ -265,6 +265,7 @@ void ClientManager::changeThemeAndLocale()
     qDebug() << "INFO: Changing theme to:" << list[themeIndex];
 #endif
     MGConfItem themeName("/meegotouch/theme/name");
+    Q_UNUSED(themeIndex);
     //themeName.set(list[themeIndex]);
 
 //    int localeIndex = rand() % locales.size();

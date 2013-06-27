@@ -126,6 +126,7 @@ void TestClient::pixmapChangedSlot(const QString &imageId, const QSize &size, co
 
 void TestClient::themeChangedSlot(const QStringList &themeInheritance, const QStringList& libraryNames)
 {
+    Q_UNUSED(libraryNames);
     currentTheme = themeInheritance.at(0);
 }
 
