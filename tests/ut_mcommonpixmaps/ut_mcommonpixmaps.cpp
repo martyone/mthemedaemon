@@ -28,6 +28,9 @@ void Ut_MCommonPixmaps::initTestCase()
 
     MGConfItem currentLocale("/meegotouch/i18n/language");
     MGConfItem currentTheme("/meegotouch/theme/name");
+    if (!currentTheme.value().isValid()) {
+      currentTheme.set("base");
+    }
     m_themeDaemon = new MThemeDaemon(MThemeDaemon::LocalDaemon);
     bool themeActivated = m_themeDaemon->activateTheme(currentTheme.value().toString(),
                                                        currentLocale.value().toString(),
