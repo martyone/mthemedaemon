@@ -53,7 +53,7 @@ INotify::Private::Private() : notifier(0), fd(-1)
 }
 
 
-INotify INotify::g_inst;
+INotify *INotify::g_inst;
 
 
 INotify::INotify() : QObject(0), hidden(0)
@@ -77,7 +77,11 @@ INotify::~INotify()
 
 INotify *INotify::instance()
 {
-    return &g_inst;
+    if (g_inst == 0) {
+        g_inst = new INotify;
+    }
+
+    return g_inst;
 }
 
 

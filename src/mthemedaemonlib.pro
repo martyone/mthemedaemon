@@ -15,9 +15,7 @@ SOURCES = \
     mcpumonitor.cpp \
     mgraphicssystemhelper.cpp \
     mimagedirectory.cpp \
-    mlocalthemedaemon.cpp \
     mpixmaphandle.cpp \
-    mremotethemedaemon.cpp \
     msystemdirectories.cpp \
     mthemedaemonclient.cpp \
     mthemedaemon.cpp \
@@ -25,17 +23,13 @@ SOURCES = \
     mthemedaemonserver.cpp \
 
 HEADERS = \
-    imthemedaemon.h \
     keypresswaiter.h \
     logger.h \
     mcommonpixmaps.h \
     mcpumonitor.h \
     mgraphicssystemhelper.h \
     mimagedirectory.h \
-    mlocalthemedaemon.h \
     mpixmaphandle.h \
-    mremotethemedaemon.h \
-    mremotethemedaemon_p.h \
     msystemdirectories.h \
     mthemedaemonclient.h \
     mthemedaemon.h \

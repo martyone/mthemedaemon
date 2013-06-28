@@ -28,6 +28,13 @@ Files:
     - "%{_sysconfdir}/xdg/autostart/mthemedaemon.desktop"
     - "%{_sysconfdir}/meegotouch/themedaemonpriorities.conf"
 SubPackages:
+    - Name: testutils
+      Summary: Utils for mthemedaemon test packages
+      Group: Development/Libraries
+      Description: |
+          This package contains utils for mthemedaemon test packages
+      Files:
+          - "/opt/tests/mthemedaemon/libutils.so*"
     - Name: benchmark-tests
       Summary: Test suite for mthemedaemon - benchmarks
       Group: Development/Libraries

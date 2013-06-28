@@ -2,6 +2,8 @@
 
 TMP_DIR="/tmp/mthemedaemon-ut_mimagedirectory.tmp"
 
+export LD_LIBRARY_PATH="$(dirname $0):${LD_LIBRARY_PATH}"
+
 rm -rf ${TMP_DIR}
 cp -r $(dirname $0)/data/$(basename $0) ${TMP_DIR}
 cd ${TMP_DIR}

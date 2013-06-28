@@ -49,7 +49,7 @@ private:
     class Private;
     Private *hidden;
 
-    static INotify g_inst;
+    static INotify *g_inst;
 
 private slots:
     void flush();

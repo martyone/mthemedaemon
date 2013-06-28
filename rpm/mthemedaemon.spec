@@ -28,6 +28,15 @@ BuildRequires:  fdupes
 Daemon for sharing theme pixmaps
 
 
+%package testutils
+Summary:    Utils for mthemedaemon test packages
+Group:      Development/Libraries
+Requires:   %{name} = %{version}-%{release}
+
+%description testutils
+This package contains utils for mthemedaemon test packages
+
+
 %package benchmark-tests
 Summary:    Test suite for mthemedaemon - benchmarks
 Group:      Development/Libraries
@@ -97,6 +106,12 @@ fi
 # >> files
 %attr(1777, -, -) /var/cache/meegotouch
 # << files
+
+%files testutils
+%defattr(-,root,root,-)
+/opt/tests/mthemedaemon/libutils.so*
+# >> files testutils
+# << files testutils
 
 %files benchmark-tests
 %defattr(-,root,root,-)

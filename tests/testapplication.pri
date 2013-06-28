@@ -1,4 +1,5 @@
 include(tests_common.pri)
+include(utils/utils.pri)
 include(../src/mthemedaemonlib.pri)
 
 TEMPLATE = app
