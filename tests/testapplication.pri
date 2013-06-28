@@ -22,3 +22,8 @@ TESTS_DATA_PATH = $${TESTS_PATH}/data/$${SUBPROJECT_NAME}
 
 support_files.path = $$TESTS_DATA_PATH
 INSTALLS += support_files
+
+check.depends = all
+check.commands = false "Please override check.command in $${_PRO_FILE_}"
+check.CONFIG = phony
+QMAKE_EXTRA_TARGETS += check
