@@ -4,6 +4,7 @@ TEMPLATE = subdirs
 SUBDIRS = \
         benchmark \
         stresstest \
+        ut_mcommonpixmaps \
         ut_mthemedaemonprotocol \
 
 tests_xml.files = tests.xml

@@ -14,8 +14,6 @@
 
 #include <QDir>
 #include <QSignalSpy>
-#include <MApplication>
-#include <MTheme>
 #include <MGConfItem>
 #include "mthemedaemon.h"
 #include <mimagedirectory.h>
@@ -26,15 +24,6 @@ namespace {
 
 void Ut_MCommonPixmaps::initTestCase()
 {
-    static int argc = 1;
-    static char *appName = (char*) "./Ut_MCommonPixmaps";
-    m_app = new MApplication(argc, &appName);
-
-    while (MTheme::hasPendingRequests()) {
-        usleep(10000);
-        QCoreApplication::processEvents();
-    }
-
     m_commonPixmaps = 0;
 
     MGConfItem currentLocale("/meegotouch/i18n/language");
@@ -46,7 +35,8 @@ void Ut_MCommonPixmaps::initTestCase()
                                                        pixmapsToDelete);
     QVERIFY(themeActivated);
 
-    m_themeDaemon->themeImageDirs.append(new MThemeImagesDirectory(qApp->applicationDirPath()));
+    m_themeDaemon->themeImageDirs.append(new MThemeImagesDirectory(
+          QDir(qApp->applicationDirPath()).filePath("data/ut_mcommonpixmaps/")));
 
     qRegisterMetaType< M::MThemeDaemonProtocol::MostUsedPixmaps >("M::MThemeDaemonProtocol::MostUsedPixmaps");
 
@@ -57,9 +47,6 @@ void Ut_MCommonPixmaps::cleanupTestCase()
 {
     delete m_themeDaemon;
     m_themeDaemon = 0;
-
-    delete m_app;
-    m_app = 0;
 }
 
 void Ut_MCommonPixmaps::init()
@@ -223,4 +210,4 @@ void Ut_MCommonPixmaps::testSaveAndClear()
     QVERIFY(isInCache(id.imageId) == true);
 }
 
-QTEST_APPLESS_MAIN(Ut_MCommonPixmaps)
+QTEST_MAIN(Ut_MCommonPixmaps)
