@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+TMP_DIR="/tmp/mthemedaemon-ut_mimagedirectory.tmp"
+
+rm -rf ${TMP_DIR}
+cp -r $(dirname $0)/data/$(basename $0) ${TMP_DIR}
+cd ${TMP_DIR}
+exec $0.bin "${@}"

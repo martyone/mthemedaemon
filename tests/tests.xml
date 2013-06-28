@@ -12,6 +12,11 @@
                 <step>/opt/tests/mthemedaemon/ut_mcommonpixmaps</step>
             </case>
 
+            <case name="ut_mimagedirectory">
+                <description>Tests image directory related classes</description>
+                <step>/opt/tests/mthemedaemon/ut_mimagedirectory</step>
+            </case>
+
             <case name="ut_mthemedaemonprotocol">
                 <description>Tests MThemeDaemonProtocol related code</description>
                 <step>/opt/tests/mthemedaemon/ut_mthemedaemonprotocol</step>

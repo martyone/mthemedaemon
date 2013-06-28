@@ -5,6 +5,7 @@ SUBDIRS = \
         benchmark \
         stresstest \
         ut_mcommonpixmaps \
+        ut_mimagedirectory \
         ut_mthemedaemonprotocol \
 
 tests_xml.files = tests.xml

@@ -11,7 +11,6 @@
 ****************************************************************************/
 
 #include <mimagedirectory.h>
-#include <mapplication.h>
 
 #include <QImageWriter>
 #include <QDebug>
@@ -39,8 +38,6 @@ QSvgRenderer* MThemeResourceManager::svgRenderer(const QString& absoluteFilePath
     return 0;
 }
 
-MApplication *app(NULL);
-
 Ut_MImageDirectory::Ut_MImageDirectory() :
         m_mThemeImagesDirectory(0),
         m_pixmapImageResource(0),
@@ -52,11 +49,7 @@ Ut_MImageDirectory::Ut_MImageDirectory() :
 
 void Ut_MImageDirectory::initTestCase()
 {
-    static char *app_name[1] = { (char *) "./ut_mimagedirectory" };
-    static int argc = 1;
-    app = new MApplication(argc, app_name);
-
-    m_mThemeImagesDirectory = new MThemeImagesDirectory(QApplication::applicationDirPath() + "/ut_mimagedirectory-samples");
+    m_mThemeImagesDirectory = new MThemeImagesDirectory(QDir().absoluteFilePath("samples"));
     QVERIFY(m_mThemeImagesDirectory != 0);
 
     QSize imageSize(16, 16);
@@ -64,14 +57,14 @@ void Ut_MImageDirectory::initTestCase()
     image.fill(0xFFFF0000);
 
     QImageWriter imageWriter;
-    imageWriter.setFileName(QApplication::applicationDirPath() + QDir::separator() + m_pngImageFileName);
+    imageWriter.setFileName(QDir().absoluteFilePath(m_pngImageFileName));
     imageWriter.setFormat("png");
     QVERIFY(imageWriter.write(image));
 
-    m_pixmapImageResource = new PixmapImageResource(QApplication::applicationDirPath() + QDir::separator() + m_pngImageFileName);
+    m_pixmapImageResource = new PixmapImageResource(QDir().absoluteFilePath(m_pngImageFileName));
     QVERIFY(m_pixmapImageResource != 0);
 
-    m_svgImageResource = new SvgImageResource("layer1", QApplication::applicationDirPath() + QDir::separator() + m_svgImageFileName);
+    m_svgImageResource = new SvgImageResource("layer1", QDir().absoluteFilePath(m_svgImageFileName));
     QVERIFY(m_svgImageResource != 0);
 }
 
@@ -86,9 +79,7 @@ void Ut_MImageDirectory::cleanupTestCase()
     delete m_svgImageResource;
     m_svgImageResource = 0;
 
-    QFile().remove(QApplication::applicationDirPath() + QDir::separator() + m_pngImageFileName);
-
-    delete app;
+    QFile().remove(QDir().absoluteFilePath(m_pngImageFileName));
 }
 
 void Ut_MImageDirectory::testReloadLocalizedResources_data()
@@ -214,7 +205,7 @@ void Ut_MImageDirectory::testIsLocalizedResource()
 {
     QCOMPARE(m_mThemeImagesDirectory->isLocalizedResource("nonexistent"), false);
 
-    m_mThemeImagesDirectory->addImageResource(QApplication::applicationDirPath().toUtf8().constData(),
+    m_mThemeImagesDirectory->addImageResource(QDir::currentPath().toUtf8().constData(),
                                               m_pngImageFileName.toUtf8().constData(), true);
 
     QVERIFY2(m_mThemeImagesDirectory->imageResources.size() == 0, "Resources hash is not empty");
@@ -227,7 +218,7 @@ void Ut_MImageDirectory::testIsLocalizedResource()
 
     m_mThemeImagesDirectory->localizedImageResources.clear();
 
-    m_mThemeImagesDirectory->addImageResource(QApplication::applicationDirPath().toUtf8().constData(),
+    m_mThemeImagesDirectory->addImageResource(QDir::currentPath().toUtf8().constData(),
                                               m_svgImageFileName.toUtf8().constData(), false);
 
     QVERIFY2(m_mThemeImagesDirectory->imageResources.size() > 0,
@@ -249,13 +240,13 @@ void Ut_MImageDirectory::testSaveIdsInCache()
     idsList.append("test1");
     idsList.append("test2");
 
-    m_mThemeImagesDirectory->saveIdsInCache(idsList, QApplication::applicationDirPath().toUtf8().constData());
+    m_mThemeImagesDirectory->saveIdsInCache(idsList, QDir::currentPath().toUtf8().constData());
 
-    QString cacheFileName = m_mThemeImagesDirectory->createIdCacheFilename(QApplication::applicationDirPath().toUtf8().constData());
+    QString cacheFileName = m_mThemeImagesDirectory->createIdCacheFilename(QDir::currentPath().toUtf8().constData());
 
     QVERIFY(QFile::exists(cacheFileName));
 
     QFile::remove(cacheFileName);
 }
 
-QTEST_APPLESS_MAIN(Ut_MImageDirectory)
+QTEST_MAIN(Ut_MImageDirectory)
