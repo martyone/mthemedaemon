@@ -106,6 +106,7 @@ fi
 
 %files unit-tests
 %defattr(-,root,root,-)
+/opt/tests/mthemedaemon/ut_*
 /opt/tests/mthemedaemon/stresstest
 /opt/tests/mthemedaemon/stresstest.bin
 /opt/tests/mthemedaemon/tests.xml

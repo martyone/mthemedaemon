@@ -4,6 +4,7 @@ TEMPLATE = subdirs
 SUBDIRS = \
         benchmark \
         stresstest \
+        ut_mthemedaemonprotocol \
 
 tests_xml.files = tests.xml
 tests_xml.path = $$TESTS_PATH

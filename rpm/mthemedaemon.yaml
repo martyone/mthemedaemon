@@ -41,6 +41,7 @@ SubPackages:
       Description: |
           This package contains unit tests for mthemedaemon
       Files:
+          - "/opt/tests/mthemedaemon/ut_*"
           - "/opt/tests/mthemedaemon/stresstest"
           - "/opt/tests/mthemedaemon/stresstest.bin"
           - "/opt/tests/mthemedaemon/tests.xml"

@@ -359,7 +359,6 @@ void Ut_MThemedaemonProtocol::streamThemeDaemonStatusPacket()
 
 Q_DECLARE_METATYPE(QList<PixmapHandle>)
 Q_DECLARE_METATYPE(QList<PixmapIdentifier>)
-Q_DECLARE_METATYPE(MPixmapHandle)
 
 void Ut_MThemedaemonProtocol::verifyStreamIsEmpty()
 {
