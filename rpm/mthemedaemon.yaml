@@ -35,6 +35,7 @@ SubPackages:
           This package contains benchmark tests for mthemedaemon
       Files:
           - "/opt/tests/mthemedaemon/benchmark"
+          - "/opt/tests/mthemedaemon/benchmark.bin"
     - Name: unit-tests
       Summary: Test suite for mthemedaemon - unit tests
       Group: Development/Libraries

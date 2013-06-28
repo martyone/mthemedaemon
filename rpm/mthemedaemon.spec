@@ -101,6 +101,7 @@ fi
 %files benchmark-tests
 %defattr(-,root,root,-)
 /opt/tests/mthemedaemon/benchmark
+/opt/tests/mthemedaemon/benchmark.bin
 # >> files benchmark-tests
 # << files benchmark-tests
 

@@ -1,7 +1,5 @@
 include(../testapplication.pri)
 
-TARGET = ut_mcommonpixmaps
-
 SOURCES += \
     ut_mcommonpixmaps.cpp \
 
