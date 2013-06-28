@@ -27,6 +27,7 @@ using namespace M::MThemeDaemonProtocol;
 BenchmarkRemoteClient::BenchmarkRemoteClient() : packetsSent(0)
 {
     stream.setDevice(&socket);
+    stream.setVersion(QDataStream::Qt_4_6);
 
     connect(&socket, SIGNAL(connected()), SLOT(connected()));
     connect(&socket, SIGNAL(disconnected()), SLOT(disconnected()));
