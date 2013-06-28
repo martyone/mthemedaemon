@@ -43,6 +43,7 @@ SubPackages:
       Files:
           - "/opt/tests/mthemedaemon/benchmark"
           - "/opt/tests/mthemedaemon/benchmark.bin"
+          - "/opt/tests/mthemedaemon/benchmark-tests.xml"
     - Name: unit-tests
       Summary: Test suite for mthemedaemon - unit tests
       Group: Development/Libraries
@@ -52,5 +53,5 @@ SubPackages:
           - "/opt/tests/mthemedaemon/ut_*"
           - "/opt/tests/mthemedaemon/stresstest"
           - "/opt/tests/mthemedaemon/stresstest.bin"
-          - "/opt/tests/mthemedaemon/tests.xml"
+          - "/opt/tests/mthemedaemon/unit-tests.xml"
           - "/opt/tests/mthemedaemon/data"

@@ -117,6 +117,7 @@ fi
 %defattr(-,root,root,-)
 /opt/tests/mthemedaemon/benchmark
 /opt/tests/mthemedaemon/benchmark.bin
+/opt/tests/mthemedaemon/benchmark-tests.xml
 # >> files benchmark-tests
 # << files benchmark-tests
 
@@ -125,7 +126,7 @@ fi
 /opt/tests/mthemedaemon/ut_*
 /opt/tests/mthemedaemon/stresstest
 /opt/tests/mthemedaemon/stresstest.bin
-/opt/tests/mthemedaemon/tests.xml
+/opt/tests/mthemedaemon/unit-tests.xml
 /opt/tests/mthemedaemon/data
 # >> files unit-tests
 # << files unit-tests

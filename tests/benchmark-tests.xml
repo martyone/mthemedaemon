@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+
+    <suite name="mthemedaemon">
+
+        <set name="mthemedaemon-benchmark-tests">
+
+            <description>mthemedaemon benchmark tests</description>
+
+            <case name="benchmark">
+                <description>Benchmark test for mthemedaemon</description>
+                <step>/opt/tests/mthemedaemon/benchmark</step>
+            </case>
+
+        </set>
+
+    </suite>
+
+</testdefinition>

@@ -3,9 +3,9 @@
 
     <suite name="mthemedaemon">
 
-        <set name="mthemedaemon">
+        <set name="mthemedaemon-unit-tests">
 
-            <description>mthemedaemon tests</description>
+            <description>mthemedaemon unit tests</description>
 
             <case name="ut_mcommonpixmaps">
                 <description>Tests MCommonPixmaps class</description>
